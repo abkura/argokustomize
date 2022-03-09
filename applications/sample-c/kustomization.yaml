@@ -1,0 +1,17 @@
+bases:
+- ../../jbosseap-base
+
+namePrefix: sample-c-
+
+commonLabels:
+  application: sample-c
+  
+images:
+- name: application-image
+  newName: abkura/jboss-profiler
+  newTag: latest
+
+patches:
+- path: patches/env-patch.yaml
+  target:
+    kind: Deployment
