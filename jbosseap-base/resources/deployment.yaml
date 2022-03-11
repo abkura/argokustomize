@@ -33,7 +33,7 @@ spec:
             - /bin/bash
             - -c
             - /opt/eap/bin/livenessProbe.sh
-          initialDelaySeconds: 120
+          initialDelaySeconds: 60
         ports:
         - containerPort: 8778
           name: jolokia
@@ -50,7 +50,7 @@ spec:
             - /bin/bash
             - -c
             - /opt/eap/bin/readinessProbe.sh
-          initialDelaySeconds: 120
+          initialDelaySeconds: 60
         resources:
           limits:
             memory: 1Gi
@@ -58,4 +58,17 @@ spec:
           requests:
             memory: 1Gi
             cpu: 1000m
+        volumeMounts:
+          - mountPath: /app/lib/
+            name: application-lib    
       terminationGracePeriodSeconds: 75
+      initContainers:
+        - image: artifactory.estesinternal.com/docker/busybox
+          name: install-datadog-agent
+          command: ['/bin/sh','-c','wget https://dtdg.co/latest-java-tracer -O /app/lib/datadog-agent.jar']
+          volumeMounts:
+          - mountPath: /app/lib/
+            name: application-lib
+      volumes:
+        - name: application-lib
+          emptyDir: {}
