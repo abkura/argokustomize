@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
 - ../../jbosseap-base
+- resources/secret.yaml
 
 namePrefix: sample-a-
 
@@ -19,7 +20,7 @@ patches:
   target:
     kind: Deployment
       
-- path: resources/deployment.yaml
+- path: resources/volumes.yaml
   target:
     kind: Deployment
     
