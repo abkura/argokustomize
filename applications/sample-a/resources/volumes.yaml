@@ -9,8 +9,6 @@ spec:
         - name: application-container
           image: application-image
           envFrom:
-            - configMapRef:
-                name: config
             - secretRef:
                 name: secrets
           volumeMounts:
